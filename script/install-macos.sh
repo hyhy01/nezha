@@ -100,7 +100,7 @@ confirm() {
 
 update_script() {
     echo -e "> 更新脚本"
-
+    mkdir ./tmp
     curl -sL https://${GITHUB_RAW_URL}/script/install-macos.sh -o ./tmp/nezha.sh
     new_version=$(cat ./tmp/nezha.sh | grep "NZ_VERSION" | head -n 1 | awk -F "=" '{print $2}' | sed 's/\"//g;s/,//g;s/ //g')
     if [ ! -n "$new_version" ]; then
