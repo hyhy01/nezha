@@ -101,19 +101,19 @@ confirm() {
 update_script() {
     echo -e "> 更新脚本"
 
-    curl -sL https://${GITHUB_RAW_URL}/script/install-macos.sh -o /tmp/nezha.sh
-    new_version=$(cat /tmp/nezha.sh | grep "NZ_VERSION" | head -n 1 | awk -F "=" '{print $2}' | sed 's/\"//g;s/,//g;s/ //g')
+    curl -sL https://${GITHUB_RAW_URL}/script/install-macos.sh -o ./tmp/nezha.sh
+    new_version=$(cat ./tmp/nezha.sh | grep "NZ_VERSION" | head -n 1 | awk -F "=" '{print $2}' | sed 's/\"//g;s/,//g;s/ //g')
     if [ ! -n "$new_version" ]; then
         echo -e "脚本获取失败，请检查本机能否链接 https://${GITHUB_RAW_URL}/script/install-macos.sh"
         return 1
     fi
     echo -e "当前最新版本为: ${new_version}"
-    mv -f /tmp/nezha.sh ./nezha.sh && chmod a+x ./nezha.sh
+    mv -f ./tmp/nezha.sh "$HOME/nezha.sh" && chmod a+x "$HOME/nezha.sh"
 
     echo -e "3s后执行新脚本"
     sleep 3s
     clear
-    exec ./nezha.sh
+    exec "$HOME/nezha.sh"
     exit 0
 }
 
@@ -318,6 +318,7 @@ show_usage() {
     echo "./nezha.sh show_agent_log             - 查看Agent日志"
     echo "./nezha.sh uninstall_agent            - 卸载Agent"
     echo "./nezha.sh restart_agent              - 重启Agent"
+    echo "./nezha.sh status_agent               - Agent允许状态"
     echo "./nezha.sh update_script              - 更新脚本"
     echo "--------------------------------------------------------"
 }
